@@ -1,2 +1,2 @@
 # dichatgpt
-chatgpt api
+chatgpt api add
