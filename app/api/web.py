@@ -1,7 +1,8 @@
 from app import app
 from flask import Flask, request
+from api import bp
 
-@app.route("/")
+@bp.route("/")
 def index():
     return 'Hi, welcome~'
 
