@@ -11,6 +11,5 @@ def index():
 def reg():
     user_name = request.json.get('un')
     password = request.json.get('pw')
-    #generate_random_string(6)
-    #user.save(generate_random_string(6), user_name, password)
+    user.save(generate_random_string(6), user_name, password)
     return 'ok'
