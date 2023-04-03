@@ -1,6 +1,6 @@
 from flask import Flask, request
 from app.api import bp
-from app.user import user
+from app.model.user import user
 from app.utils import generate_random_string
 from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
@@ -9,6 +9,7 @@ from app.api.api_res import ApiRes
 @bp.route("/")
 def index():
     return jsonify_with_data(ApiRes.OK)
+
 
 @bp.route("/reg", methods=['POST'])
 def reg():

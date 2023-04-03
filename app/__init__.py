@@ -9,6 +9,8 @@ db = SQLAlchemy(app)
 
 from app.api import bp
 app.register_blueprint(bp, url_prefix='/')
+from app.api import lg
+app.register_blueprint(lg, url_prefix='/login')
 
 
 
