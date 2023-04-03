@@ -12,8 +12,12 @@ def index():
 
 @bp.route("/reg", methods=['POST'])
 def reg():
-    user_name = request.json.get('un')
-    password = request.json.get('pw')
+    user_name = request.json.get('un').strip()
+    if len(user_name) == 0:
+       return jsonify_with_data(ApiRes.BAD_USER_NAME)  
+    password = request.json.get('pw').strip()
+    if len(password) == 0:
+       return jsonify_with_data(ApiRes.BAD_USER_PASSWORD)  
     usr = user.query(user_name)
     if usr is not None:
         return jsonify_with_data(ApiRes.BAD_REQUEST) 
