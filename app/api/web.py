@@ -14,12 +14,12 @@ def index():
 def reg():
     user_name = request.json.get('un').strip()
     if len(user_name) == 0:
-       return jsonify_with_data(ApiRes.BAD_USER_NAME)  
+       return jsonify_with_error(ApiRes.BAD_USER_NAME)  
     password = request.json.get('pw').strip()
     if len(password) == 0:
-       return jsonify_with_data(ApiRes.BAD_USER_PASSWORD)  
+       return jsonify_with_error(ApiRes.BAD_USER_PASSWORD)  
     usr = user.query(user_name)
     if usr is not None:
-        return jsonify_with_data(ApiRes.BAD_REQUEST) 
+        return jsonify_with_error(ApiRes.BAD_REQUEST) 
     user.save(generate_random_string(6), user_name, password)
     return jsonify_with_data(ApiRes.OK)
