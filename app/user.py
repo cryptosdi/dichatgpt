@@ -15,6 +15,11 @@ class user(db.Model):
                  del_flag=0, create_time=datetime.now(), update_time=datetime.now())
         db.session.add(s_user)
         db.session.commit()
+    
+    def query(userName):
+        q_user = db.session.query(user).filter_by(user_name=userName).first()
+        return q_user
+
 
     def __repr__(self):
         return '<user %r>' % self.username
