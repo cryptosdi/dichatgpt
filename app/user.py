@@ -1,5 +1,5 @@
-from main import db
 from datetime import datetime
+from app import db
 class user(db.Model):
     __tablename__ = 'di_user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
