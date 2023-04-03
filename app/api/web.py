@@ -14,5 +14,8 @@ def index():
 def reg():
     user_name = request.json.get('un')
     password = request.json.get('pw')
+    usr = user.query(user_name)
+    if usr is not None:
+        return jsonify_with_data(ApiRes.BAD_REQUEST) 
     user.save(generate_random_string(6), user_name, password)
     return jsonify_with_data(ApiRes.OK)
