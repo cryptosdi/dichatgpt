@@ -3,7 +3,7 @@ from app.api import bp
 
 @bp.route("/")
 def index():
-    return 'Hi, welcome~'
+    return 'Hi, welcome~suc'
 
 @bp.route("/reg", methods=['POST'])
 def reg():
