@@ -36,10 +36,6 @@ def refresh():
     access_token = create_access_token(identity=identity)
     return jsonify_with_data(ApiRes.OK, access_token=access_token)
 
-@jwt.expired_token_loader
-def expired_token_callback(jwt_header, jwt_payload):
-    return jsonify_with_error(ApiRes.EXPIRED_TOKEN)
-
 
 @lg.route("/reg", methods=['POST'])
 def reg():

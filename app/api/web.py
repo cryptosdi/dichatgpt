@@ -7,9 +7,11 @@ from app.api.api_res import ApiRes
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from app.utils import logger
+from app import limiter
 
 @bp.route("/")
 @jwt_required(optional=True)
+@limiter.limit("2/minute")
 def index():
     user_id = get_jwt_identity()
     if user_id:

@@ -8,4 +8,5 @@ class ApiRes:
     NO_ACCESS = (410, 'forbidden')
     EXPIRED_TOKEN = (411, 'EXPIRED TOKEN')
     NO_TOKEN = (412, 'no token')
+    LIMIT_API = (413, 'limit api')
     NOT_FOUND = (420, 'not_found')

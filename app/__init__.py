@@ -5,11 +5,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from app.config import Config
 from datetime import timedelta
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 # 加载 .env 文件中的配置信息
 load_dotenv()
 
 app = Flask(__name__)
+
+limiter = Limiter(get_remote_address, app=app, default_limits=["200 per day", "2 per minute"])
 
 app.config.from_object(Config)
 db = SQLAlchemy(app)
