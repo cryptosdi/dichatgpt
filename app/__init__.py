@@ -30,6 +30,8 @@ from app.api import bp
 app.register_blueprint(bp, url_prefix='/')
 from app.api import lg
 app.register_blueprint(lg, url_prefix='/login')
+from app.api import ct
+app.register_blueprint(ct, url_prefix='/chat')
 
 
 
