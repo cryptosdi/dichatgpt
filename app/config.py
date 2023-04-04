@@ -1,6 +1,5 @@
 
 import os
-from urllib.parse import quote_plus
 import sqlalchemy as sa
 class Config(object):
     user = os.getenv('DB_ACCOUNT')

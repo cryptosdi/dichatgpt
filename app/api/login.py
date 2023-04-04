@@ -10,6 +10,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import create_refresh_token
 from app.utils import generate_random_string
+from app.utils import logger
 
 @lg.route('', methods=['POST'])
 def login():
@@ -48,11 +49,15 @@ def reg():
     password = request.json.get('pw').strip()
     if len(password) == 0:
        return jsonify_with_error(ApiRes.BAD_USER_PASSWORD)  
+    logger.info('[gpt] reg user_name=%s, pw=%s', user_name, password)
     usr = user.query(user_name)
     if usr is not None:
         return jsonify_with_error(ApiRes.BAD_REQUEST) 
     user_id = generate_random_string(6)
-    user.save(user_id, user_name, password)
+    try:
+        user.save(user_id, user_name, password)
+    except Exception as e:
+        return jsonify_with_error(ApiRes.NO_ACCESS) 
     access_token = create_access_token(identity=user_id)
     refresh_token = create_refresh_token(identity=user_id)
     return jsonify_with_data(ApiRes.OK, access_token=access_token, refresh_token=refresh_token)
