@@ -4,6 +4,7 @@ from app.model.user import user
 from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
 from app.api.api_res import ApiRes
+from flask_jwt_extended import create_access_token
 
 
 @lg.route('', methods=['POST'])
@@ -19,4 +20,5 @@ def login():
         return jsonify_with_error(ApiRes.BAD_REQUEST) 
     if usr.password != password:
         return jsonify_with_error(ApiRes.ERROR_USER_PASSWORD)  
-    return jsonify_with_data(ApiRes.OK)
+    access_token = create_access_token(identity=usr.user_id)
+    return jsonify_with_data(ApiRes.OK, access_token=access_token)
