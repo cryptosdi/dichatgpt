@@ -57,6 +57,7 @@ def reg():
     try:
         user.save(user_id, user_name, password)
     except Exception as e:
+        logger.error('[gpt] reg exception=%s', e)
         return jsonify_with_error(ApiRes.NO_ACCESS) 
     access_token = create_access_token(identity=user_id)
     refresh_token = create_refresh_token(identity=user_id)
