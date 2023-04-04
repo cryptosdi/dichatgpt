@@ -18,6 +18,8 @@ jwt = JWTManager()
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 hs = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES_HOURS'))
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=hs)
+days = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES_DAYS'))
+app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=days)
 jwt.init_app(app)
 
 from app.api import bp

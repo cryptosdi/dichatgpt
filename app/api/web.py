@@ -8,12 +8,17 @@ from app.api.api_res import ApiRes
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import create_access_token
+from app import jwt
 
 @bp.route("/")
 @jwt_required()
 def index():
     user_id = get_jwt_identity()
     return jsonify_with_data(ApiRes.OK, user_id=user_id)
+
+@jwt.expired_token_loader
+def expired_token_callback():
+    return jsonify_with_error(ApiRes.EXPIRED_TOKEN)
 
 
 @bp.route("/reg", methods=['POST'])

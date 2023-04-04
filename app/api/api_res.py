@@ -6,4 +6,5 @@ class ApiRes:
     BAD_USER_PASSWORD = (402, 'password not empty')
     ERROR_USER_PASSWORD = (403, 'password error')
     NO_ACCESS = (410, 'forbidden')
+    EXPIRED_TOKEN = (411, 'EXPIRED TOKEN')
     NOT_FOUND = (420, 'not_found')
