@@ -5,10 +5,15 @@ from app.utils import generate_random_string
 from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
 from app.api.api_res import ApiRes
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import create_access_token
 
 @bp.route("/")
+@jwt_required()
 def index():
-    return jsonify_with_data(ApiRes.OK)
+    user_id = get_jwt_identity()
+    return jsonify_with_data(ApiRes.OK, user_id=user_id)
 
 
 @bp.route("/reg", methods=['POST'])
@@ -22,5 +27,7 @@ def reg():
     usr = user.query(user_name)
     if usr is not None:
         return jsonify_with_error(ApiRes.BAD_REQUEST) 
-    user.save(generate_random_string(6), user_name, password)
-    return jsonify_with_data(ApiRes.OK)
+    user_id = generate_random_string(6)
+    user.save(user_id, user_name, password)
+    access_token = create_access_token(identity=user_id)
+    return jsonify_with_data(ApiRes.OK, access_token=access_token)
