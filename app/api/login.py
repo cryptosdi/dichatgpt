@@ -1,6 +1,5 @@
 from flask import Flask, request
 from app.api import lg
-from app import jwt
 from app.model.user import user
 from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
@@ -11,8 +10,10 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import create_refresh_token
 from app.utils import generate_random_string
 from app.utils import logger
+from app import limiter
 
 @lg.route('', methods=['POST'])
+@limiter.limit("5/minute")
 def login():
     user_name = request.json.get('un').strip()
     if len(user_name) == 0:
@@ -31,6 +32,7 @@ def login():
 
 @lg.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
+@limiter.limit("5/minute")
 def refresh():
     identity = get_jwt_identity()
     access_token = create_access_token(identity=identity)
@@ -38,6 +40,7 @@ def refresh():
 
 
 @lg.route("/reg", methods=['POST'])
+@limiter.limit("5/minute")
 def reg():
     user_name = request.json.get('un').strip()
     if len(user_name) == 0:

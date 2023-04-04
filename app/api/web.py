@@ -11,7 +11,7 @@ from app import limiter
 
 @bp.route("/")
 @jwt_required(optional=True)
-@limiter.limit("2/minute")
+@limiter.limit("5/minute")
 def index():
     user_id = get_jwt_identity()
     if user_id:
