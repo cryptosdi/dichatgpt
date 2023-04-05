@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import os
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
@@ -13,7 +13,10 @@ load_dotenv()
 
 app = Flask(__name__)
 
-limiter = Limiter(get_remote_address, app=app, default_limits=["200 per day", "2 per minute"])
+limiter = Limiter(
+    key_func=lambda: request.method + request.path,
+    app=app, 
+    default_limits=["200 per day", "2 per minute"])
 
 app.config.from_object(Config)
 db = SQLAlchemy(app)
