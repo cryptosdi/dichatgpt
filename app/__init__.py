@@ -7,6 +7,7 @@ from app.config import Config
 from datetime import timedelta
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+import openai
 
 # 加载 .env 文件中的配置信息
 load_dotenv()
@@ -28,6 +29,11 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=hs)
 days = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES_DAYS'))
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=days)
 jwt.init_app(app)
+
+openai.api_key = os.getenv('OPENAI_API_KEY')
+#设置本地代理
+os.environ['HTTP_PROXY'] = 'http://127.0.0.1:8001'        
+os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:8001'
 
 from app.api import bp
 app.register_blueprint(bp, url_prefix='/')
