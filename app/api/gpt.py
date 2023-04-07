@@ -7,20 +7,25 @@ def ask_chat_stream_gpt(content):
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=messages,
-        temperature=0, 
+        temperature=0,
         max_tokens=1024,  # 回复最大的字符数
         stream=True
     )
     collected_messages = []
+    role = ''
     for chunk in response:
         delta = chunk['choices'][0]['delta']
+        if delta.get('role') is not None:
+            role = delta.get('role')
         if delta.get('content') is not None:
             yield delta.get('content')
         collected_messages.append(delta)
 
     full_reply_content = ''.join([m.get('content', '')
                                   for m in collected_messages])
-    logger.info("[gpt] full_reply_content=%s", full_reply_content)
+
+    logger.info("[gpt] role=%s, full_reply_content=%s",
+                role, full_reply_content)
 
 
 def ask_gpt(prompt):
