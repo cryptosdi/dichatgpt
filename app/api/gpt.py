@@ -7,7 +7,7 @@ def ask_chat_stream_gpt(content):
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=messages,
-        temperature=0.9,  # 值在[0,1]之间，越大表示回复越具有不确定性
+        temperature=0, 
         max_tokens=1024,  # 回复最大的字符数
         stream=True
     )
@@ -15,14 +15,12 @@ def ask_chat_stream_gpt(content):
     for chunk in response:
         delta = chunk['choices'][0]['delta']
         if delta.get('content') is not None:
-            content = delta.get('content')
-            print(f"[gpt] content={content}")
-            yield content
+            yield delta.get('content')
         collected_messages.append(delta)
 
     full_reply_content = ''.join([m.get('content', '')
                                   for m in collected_messages])
-    print(f"Full conversation received: {full_reply_content}")
+    logger.info("[gpt] full_reply_content=%s", full_reply_content)
 
 
 def ask_gpt(prompt):
