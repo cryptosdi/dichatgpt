@@ -34,4 +34,4 @@ def get():
     user_id = get_jwt_identity()
     logger.info('[gpt] get messages user_id=%s', user_id)
     messages = query_history_message(user_id, 3)
-    return jsonify_with_data(ApiRes.OK, messages=messages)
+    return jsonify_with_data(ApiRes.OK, messages=messages[::-1])
