@@ -26,11 +26,12 @@ def chat():
         return jsonify_with_error(ApiRes.SERVICE_ERROR)
     return Response(rsp, mimetype='text/event-stream')
 
+
 @ct.route('/get', methods=['POST'])
 @jwt_required()
 @limiter.limit("5/minute")
 def get():
     user_id = get_jwt_identity()
-    logger.info('[gpt] get messages user_id=%s', user_id) 
+    logger.info('[gpt] get messages user_id=%s', user_id)
     messages = query_history_message(user_id, 3)
     return jsonify_with_data(ApiRes.OK, messages=messages)
