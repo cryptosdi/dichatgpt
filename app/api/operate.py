@@ -16,9 +16,11 @@ def save(user_id, role, content, reply_content):
     message.save(user_id, json.dumps(messages))
     logger.info('[gpt] save message')
 
-def merge_history_message(user_id, content):
+def merge_history_message(user_id, role, content):
+    merge_his_messages = [{"role": role, "content": content}]
     messages =  message.query(user_id, 3)
-    merge_his_messages = [{"role": "user", "content": content}]
+    if messages is None:
+        return merge_his_messages 
     for item in messages:
         merge_his_messages.append(json.loads(item.message))
     return merge_his_messages

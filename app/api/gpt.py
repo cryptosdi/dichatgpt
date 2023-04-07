@@ -1,10 +1,10 @@
 import openai
 from app.utils import logger
-from app.api.operate import save_message
+from app.api.operate import save_message, merge_history_message
 
 
 def ask_chat_stream_gpt(user_id, content):
-    messages = [{"role": "user", "content": content}]
+    messages = merge_history_message(user_id, "user", content)
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=messages,
