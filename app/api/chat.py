@@ -8,6 +8,7 @@ from app import limiter
 from app.api.api_res import ApiRes
 from app.api.gpt import ask_chat_stream_gpt, ask_gpt
 from app.utils import logger
+from app.api.operate import query_history_message
 
 
 @ct.route('/ask', methods=['POST'])
@@ -24,3 +25,12 @@ def chat():
     except Exception as e:
         return jsonify_with_error(ApiRes.SERVICE_ERROR)
     return Response(rsp, mimetype='text/event-stream')
+
+@ct.route('/get', methods=['POST'])
+@jwt_required()
+@limiter.limit("5/minute")
+def get():
+    user_id = get_jwt_identity()
+    logger.info('[gpt] get messages user_id=%s', user_id) 
+    messages = query_history_message(user_id, 3)
+    return jsonify_with_data(ApiRes.OK, messages=messages)

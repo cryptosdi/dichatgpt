@@ -14,9 +14,9 @@ class message(db.Model):
         db.session.add(s_message)
         db.session.commit()
 
-    def query(userId, num):
+    def query(userId, count):
         q_message = db.session.query(message).filter_by(
-            user_id=userId).order_by(message.id.desc()).limit(num)
+            user_id=userId).order_by(message.id.desc()).limit(count)
         return q_message
 
     def __repr__(self):
