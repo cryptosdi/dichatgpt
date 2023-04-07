@@ -32,6 +32,9 @@ def chat():
 @limiter.limit("5/minute")
 def get():
     user_id = get_jwt_identity()
+    count = request.json.get('count')
+    if count is None:
+        count = 3
     logger.info('[gpt] get messages user_id=%s', user_id)
-    messages = query_history_message(user_id, 3)
+    messages = query_history_message(user_id, count)
     return jsonify_with_data(ApiRes.OK, messages=messages[::-1])
