@@ -2,7 +2,8 @@ import openai
 from app.utils import logger
 
 
-def ask_chat_stream_gpt(messages):
+def ask_chat_stream_gpt(content):
+    messages = [{"role": "user", "content": content}]
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=messages,
@@ -24,10 +25,10 @@ def ask_chat_stream_gpt(messages):
     print(f"Full conversation received: {full_reply_content}")
 
 
-def ask_gpt(message):
+def ask_gpt(prompt):
     reply = openai.Completion.create(
         model="text-davinci-002",  # 对话模型的名称
-        prompt=message,
+        prompt=prompt,
         temperature=0.9,  # 值在[0,1]之间，越大表示回复越具有不确定性
         max_tokens=1024,  # 回复最大的字符数
         top_p=1,

@@ -20,8 +20,7 @@ def chat():
     if len(content) == 0:
         return jsonify_with_error(ApiRes.CONTENT_EMPTY)
     try:
-        messages = [{"role": "user", "content": content}]
-        rsp = ask_chat_stream_gpt(messages)
+        rsp = ask_chat_stream_gpt(content)
     except Exception as e:
         return jsonify_with_error(ApiRes.SERVICE_ERROR)
     return Response(rsp, mimetype='text/event-stream')
