@@ -1,6 +1,5 @@
 from flask import Flask, request
 from app.api import bp
-from app.model.user import user
 from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
 from app.api.api_res import ApiRes

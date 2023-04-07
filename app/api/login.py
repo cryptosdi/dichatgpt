@@ -1,6 +1,6 @@
 from flask import Flask, request
 from app.api import lg
-from app.model.user import user
+from app.model import user
 from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
 from app.api.api_res import ApiRes
