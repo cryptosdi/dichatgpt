@@ -9,8 +9,8 @@ class message(db.Model):
     message = db.Column(db.Text, nullable=False)
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def save(userId, message):
-        s_message = message(user_id=userId, message=message)
+    def save(userId, msg):
+        s_message = message(user_id=userId, message=msg)
         db.session.add(s_message)
         db.session.commit()
 

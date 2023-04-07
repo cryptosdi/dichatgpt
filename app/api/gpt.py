@@ -1,14 +1,16 @@
 import openai
 from app.utils import logger
+from app.api.operate import save_message
 
 
-def ask_chat_stream_gpt(content):
+def ask_chat_stream_gpt(user_id, content):
     messages = [{"role": "user", "content": content}]
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=messages,
         temperature=0,
         max_tokens=1024,  # 回复最大的字符数
+        stop=None,
         stream=True
     )
     collected_messages = []
@@ -26,9 +28,10 @@ def ask_chat_stream_gpt(content):
 
     logger.info("[gpt] role=%s, full_reply_content=%s",
                 role, full_reply_content)
+    save_message(user_id, role, content, full_reply_content)
 
 
-def ask_gpt(prompt):
+def ask_gpt(user_id, prompt):
     reply = openai.Completion.create(
         model="text-davinci-002",  # 对话模型的名称
         prompt=prompt,
