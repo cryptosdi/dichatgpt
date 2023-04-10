@@ -37,5 +37,7 @@ def query_history_message(user_id, count):
     history_messages = []
     messages = message.query(user_id, count)
     for item in messages:
-        history_messages.append(json.loads(item.message))
+        merge_message = {"create_time": item.create_time.strftime(
+            '%Y-%m-%d %H:%M:%S'), "messages": json.loads(item.message)}
+        history_messages.append(merge_message)
     return history_messages
