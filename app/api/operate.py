@@ -25,10 +25,12 @@ def merge_history_message(user_id, role, content):
         if messages is None:
             merge_his_messages.append({"role": role, "content": content})
             return merge_his_messages
+        messages = messages[::-1]
         for item in messages:
-            j_item = json.loads(item.message)[0]
-            merge_his_messages.insert(1,
-                                      {"role": j_item['role'], "content": j_item['content']})
+            j_item = json.loads(item.message)
+            for m_item in j_item:
+                merge_his_messages.append(
+                    {"role": m_item['role'], "content": m_item['content']})
         merge_his_messages.append({"role": role, "content": content})
         return merge_his_messages
 
