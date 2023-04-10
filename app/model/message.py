@@ -15,7 +15,7 @@ class message(db.Model):
         db.session.commit()
 
     def query(userId, count):
-        q_message = db.session.query(message.message, message.create_time).filter_by(
+        q_message = db.session.query(message).with_entities(message.message, message.create_time).filter_by(
             user_id=userId).order_by(message.id.desc()).limit(count)
         return q_message
 
