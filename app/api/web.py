@@ -7,14 +7,22 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from app.utils import logger
 from app import limiter
+from flask import Flask, Response
+import time
 
 @bp.route("/")
 @jwt_required(optional=True)
 @limiter.limit("5/minute")
 def index():
     user_id = get_jwt_identity()
-    if user_id:
-        logger.info("[gpt] index user_id=%s", user_id)
-        return jsonify_with_data(ApiRes.OK, user_id=user_id)
-    else:
-        return jsonify_with_error(ApiRes.NO_TOKEN) 
+    #return Response(generate_text(), mimetype="text/plain")
+    return Response(generate_text(), mimetype='application/octet-stream')
+def generate_text():
+    yield "Hello "
+    time.sleep(1)
+    yield "cryptodi!"
+    time.sleep(1)
+    yield " This is a stream response."
+    time.sleep(1)
+    yield "ok"
+
