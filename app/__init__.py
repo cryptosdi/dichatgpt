@@ -14,6 +14,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
+app.config['JSON_AS_ASCII'] = False
+
 limiter = Limiter(
     key_func=lambda: request.method + request.path,
     app=app, 
