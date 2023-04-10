@@ -11,7 +11,7 @@ from app.utils import logger
 from app.api.operate import query_history_message
 
 
-@ct.route('/ask', methods=['POST'])
+@ct.route('/chat', methods=['POST'])
 @jwt_required()
 @limiter.limit("5/minute")
 def chat():
