@@ -1,6 +1,6 @@
 from flask import Flask, request
 from app.api import lg
-from app.model import user
+from app.model import User
 from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
 from app.service import ApiRes
@@ -21,7 +21,7 @@ def login():
     password = request.json.get('pw').strip()
     if len(password) == 0:
        return jsonify_with_error(ApiRes.BAD_USER_PASSWORD)
-    usr = user.query(user_name)
+    usr = User.query(user_name)
     if usr is None:
         return jsonify_with_error(ApiRes.BAD_REQUEST) 
     if usr.password != password:
@@ -49,12 +49,12 @@ def reg():
     if len(password) == 0:
        return jsonify_with_error(ApiRes.BAD_USER_PASSWORD)  
     logger.info('[gpt] reg user_name=%s, pw=%s', user_name, password)
-    usr = user.query(user_name)
+    usr = User.query(user_name)
     if usr is not None:
         return jsonify_with_error(ApiRes.BAD_REQUEST) 
     user_id = generate_random_string(6)
     try:
-        user.save(user_id, user_name, password)
+        User.save(user_id, user_name, password)
     except Exception as e:
         logger.error('[gpt] reg exception=%s', e)
         return jsonify_with_error(ApiRes.NO_ACCESS) 
