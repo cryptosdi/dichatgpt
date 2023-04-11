@@ -2,7 +2,7 @@ from flask_limiter.errors import RateLimitExceeded
 from app import app
 from app import jwt
 from app.utils import jsonify_with_error
-from app.api.api_res import ApiRes
+from app.service.api_res import ApiRes
 
 @app.errorhandler(RateLimitExceeded)
 def handle_limiter(e: RateLimitExceeded):

@@ -1,6 +1,6 @@
 import openai
 from app.utils import logger
-from app.api.operate import save_message, merge_history_message
+from app.service import save_message, merge_history_message
 
 
 def ask_chat_stream_gpt(user_id, content):

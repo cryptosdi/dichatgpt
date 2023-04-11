@@ -2,7 +2,7 @@ from flask import Flask, request
 from app.api import bp
 from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
-from app.api.api_res import ApiRes
+from app.service import ApiRes
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from app.utils import logger

@@ -5,10 +5,10 @@ from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
 from app.api import ct
 from app import limiter
-from app.api.api_res import ApiRes
-from app.api.gpt import ask_chat_stream_gpt, ask_gpt
+from app.service import ApiRes
+from app.service import ask_chat_stream_gpt, ask_gpt
 from app.utils import logger
-from app.api.operate import query_history_message
+from app.service import query_history_message
 
 
 @ct.route('/chat', methods=['POST'])
