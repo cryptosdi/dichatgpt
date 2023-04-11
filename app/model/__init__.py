@@ -1,2 +1,2 @@
 from app.model.user import User
-from app.model.message import Gptmessage
+from app.model.message import Dbmessage

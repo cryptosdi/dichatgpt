@@ -1,6 +1,6 @@
 import os
 import json
-from app.model import Gptmessage
+from app.model import Dbmessage
 from app.utils import logger
 from app import app
 from app.service import Message
@@ -17,13 +17,13 @@ class Opmessage:
     def save(self, user_id, role, content, reply_content):
         messages = [self.get_message(
             "user", content), self.get_message(role, reply_content)]
-        Gptmessage.save(user_id, json.dumps(messages))
+        Dbmessage.save(user_id, json.dumps(messages))
 
     def merge_history_message(self, user_id, role, content):
         with app.app_context():
             merge_his_messages = [self.get_message(
                 'system', 'You are a helpful assistant.')]
-            messages = Gptmessage.query(user_id, 3)
+            messages = Dbmessage.query(user_id, 3)
             if messages is None:
                 merge_his_messages.append(self.get_message(role, content))
                 return merge_his_messages
@@ -38,7 +38,7 @@ class Opmessage:
 
     def query_history_message(user_id, count):
         history_messages = []
-        messages = Gptmessage.query(user_id, count)
+        messages = Dbmessage.query(user_id, count)
         for item in messages:
             merge_message = {"create_time": item.create_time.strftime(
                 '%Y-%m-%d %H:%M:%S'), "messages": json.loads(item.message)}
