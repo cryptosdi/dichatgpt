@@ -5,7 +5,7 @@ from app.service import Opmessage
 
 class Gpt:
     def ask_chat_stream_gpt(user_id, content):
-        messages = Opmessage.merge_history_message(user_id, "user", content)
+        messages = Opmessage().merge_history_message(user_id, "user", content)
         response = openai.ChatCompletion.create(
             model='gpt-3.5-turbo',
             messages=messages,
