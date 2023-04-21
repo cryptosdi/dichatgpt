@@ -19,7 +19,7 @@ class DbChat(db.Model):
 
     def query(userId):
         q_chat = db.session.query(DbChat).filter_by(
-            user_id=userId).order_by(DbChat.id.desc()).all()
+            user_id=userId).order_by(DbChat.id.asc()).all()
         return q_chat
 
     def update(chatId, chatName):
