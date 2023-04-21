@@ -62,3 +62,24 @@ def addChats():
     logger.info('[gpt] add chats user_id=%s', user_id)
     chat_id = Opchat.save_chat(user_id, chat_name)
     return jsonify_with_data(ApiRes.OK, chat_id=chat_id)
+
+
+@ct.route('/update/chat', methods=['POST'])
+@jwt_required()
+@limiter.limit("5/minute")
+def updateChat():
+    user_id = get_jwt_identity()
+    chat_id = request.json.get('chat_id')
+    chat_name = request.json.get('chat_name')
+    Opchat.update_name(chat_id, chat_name)
+    return jsonify_with_data(ApiRes.OK)
+
+
+@ct.route('/delete/chat', methods=['POST'])
+@jwt_required()
+@limiter.limit("5/minute")
+def deleteChat():
+    user_id = get_jwt_identity()
+    chat_id = request.json.get('chat_id')
+    Opchat.delete(chat_id)
+    return jsonify_with_data(ApiRes.OK)
