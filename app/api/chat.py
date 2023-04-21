@@ -48,8 +48,6 @@ def getChats():
     user_id = get_jwt_identity()
     logger.info('[gpt] get chats user_id=%s', user_id)
     chats = Opchat.query_chat(user_id)
-    if chats is None:
-        return jsonify_with_data(ApiRes.OK, chats=[])
     return jsonify_with_data(ApiRes.OK, chats=chats)
 
 

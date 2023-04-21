@@ -20,7 +20,7 @@ class Dbmessage(db.Model):
             user_id=userId).order_by(Dbmessage.id.desc()).limit(count)
         return q_message
 
-    def query(userId, chatId, count):
+    def query_by_chatId(userId, chatId, count):
         q_message = db.session.query(Dbmessage).filter_by(
             user_id=userId, chat_id = chatId).order_by(Dbmessage.id.desc()).limit(count)
         return q_message

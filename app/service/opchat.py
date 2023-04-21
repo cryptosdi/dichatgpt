@@ -1,6 +1,7 @@
 from app.model import DbChat
 from app.utils import logger, generate_random_string
-
+from app.service import Chatvo
+import json
 
 class Opchat:
     def __init__(self):
@@ -12,7 +13,12 @@ class Opchat:
         return chat_id
 
     def query_chat(user_id):
-        return DbChat.query(user_id)
+        q_chats = DbChat.query(user_id)
+        chats = []
+        for item in q_chats:
+            chat = Chatvo(item.id, item.user_id, item.chat_name, item.chat_id)
+            chats.append(chat.to_json_obj())
+        return chats
 
     def update_name(chat_id, chat_name):
         DbChat.update(chat_id, chat_name)
