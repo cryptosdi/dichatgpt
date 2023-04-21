@@ -8,11 +8,13 @@ from datetime import timedelta
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import openai
+from flask_cors import CORS
 
 # 加载 .env 文件中的配置信息
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['JSON_AS_ASCII'] = False
 
