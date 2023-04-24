@@ -38,7 +38,16 @@ class Opmessage:
         messages = Dbmessage.query(user_id, count)
         for item in messages:
             merge_message = {"create_time": item.create_time.strftime(
-                '%Y-%m-%d %H:%M:%S'), "messages": json.loads(item.message)}
+                '%Y-%m-%d %H:%M:%S'), "contents": json.loads(item.message), "id": item.id}
+            history_messages.append(merge_message)
+        return history_messages
+    
+    def query_history_message_by_chatId(user_id, chat_id, count):
+        history_messages = []
+        messages = Dbmessage.query_by_chatId(user_id, chat_id, count)
+        for item in messages:
+            merge_message = {"create_time": item.create_time.strftime(
+                '%Y-%m-%d %H:%M:%S'), "contents": json.loads(item.message), "id": item.id}
             history_messages.append(merge_message)
         return history_messages
     
