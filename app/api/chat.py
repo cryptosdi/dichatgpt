@@ -14,7 +14,7 @@ from app.service import Opchat
 
 @ct.route('/chat', methods=['POST'])
 @jwt_required()
-@limiter.limit("5/minute")
+@limiter.limit("100/minute")
 def chat():
     user_id = get_jwt_identity()
     content = request.json.get('content')
@@ -30,20 +30,24 @@ def chat():
 
 @ct.route('/get', methods=['POST'])
 @jwt_required()
-@limiter.limit("5/minute")
+@limiter.limit("100/minute")
 def get():
     user_id = get_jwt_identity()
     count = request.json.get('count')
+    chat_id = request.json.get('chat_id') 
     if count is None:
         count = 3
-    logger.info('[gpt] get messages user_id=%s', user_id)
-    messages = Opmessage.query_history_message(user_id, count)
+    logger.info('[gpt] get messages user_id=%s, chat_id=%s', user_id, chat_id)
+    if chat_id is None:
+        messages = Opmessage.query_history_message(user_id, count)
+    else:
+        messages = Opmessage.query_history_message_by_chatId(user_id, chat_id, count)
     return jsonify_with_data(ApiRes.OK, messages=messages[::-1])
 
 
 @ct.route('/get/chats', methods=['POST'])
 @jwt_required()
-@limiter.limit("5/minute")
+@limiter.limit("10/minute")
 def getChats():
     user_id = get_jwt_identity()
     logger.info('[gpt] get chats user_id=%s', user_id)
