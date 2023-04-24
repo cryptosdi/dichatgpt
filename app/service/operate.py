@@ -10,11 +10,12 @@ class Opmessage:
     def __init__(self):
         return
 
-    def save_message(user_id, role, content, reply_content):
+    def save_message(user_id, role, content, reply_content, chatId):
         with app.app_context():
             messages = [Opmessage.get_message(
                 "user", content), Opmessage.get_message(role, reply_content)]
-            Dbmessage.save(user_id, json.dumps(messages))
+            id = Dbmessage.save(user_id, json.dumps(messages), chatId)
+            return id
 
     def merge_history_message(user_id, role, content):
         with app.app_context():

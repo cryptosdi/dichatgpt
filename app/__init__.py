@@ -37,8 +37,8 @@ jwt.init_app(app)
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 #设置本地代理
-#os.environ['HTTP_PROXY'] = 'http://127.0.0.1:8001'        
-#os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:8001'
+os.environ['HTTP_PROXY'] = 'http://127.0.0.1:8001'        
+os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:8001'
 
 from app.api import bp
 app.register_blueprint(bp, url_prefix='/')

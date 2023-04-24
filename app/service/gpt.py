@@ -4,7 +4,7 @@ from app.service import Opmessage
 
 
 class Gpt:
-    def ask_chat_stream_gpt(user_id, content):
+    def ask_chat_stream_gpt(user_id, content, chatId):
         messages = Opmessage.merge_history_message(user_id, "user", content)
         response = openai.ChatCompletion.create(
             model='gpt-3.5-turbo',
@@ -27,9 +27,11 @@ class Gpt:
         full_reply_content = ''.join([m.get('content', '')
                                       for m in collected_messages])
 
-        logger.info("[gpt] role=%s, full_reply_content=%s",
-                    role, full_reply_content)
-        Opmessage.save_message(user_id, role, content, full_reply_content)
+        id = Opmessage.save_message(
+            user_id, role, content, full_reply_content, chatId)
+        logger.info("[gpt] role=%s, full_reply_content=%s, chatId=%s, id=%s",
+                    role, full_reply_content, chatId, id)
+        yield 'saveId='+str(id)
 
     def ask_gpt(user_id, prompt):
         reply = openai.Completion.create(

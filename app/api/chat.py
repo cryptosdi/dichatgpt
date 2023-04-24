@@ -18,11 +18,12 @@ from app.service import Opchat
 def chat():
     user_id = get_jwt_identity()
     content = request.json.get('content')
-    logger.info('[gpt] user_id=%s, content=%s', user_id, content)
+    chatId = request.json.get('chatId')
+    logger.info('[gpt] user_id=%s, content=%s, chatId=%s', user_id, content, chatId)
     if len(content) == 0:
         return jsonify_with_error(ApiRes.CONTENT_EMPTY)
     try:
-        rsp = Gpt.ask_chat_stream_gpt(user_id, content)
+        rsp = Gpt.ask_chat_stream_gpt(user_id, content, chatId)
     except Exception as e:
         return jsonify_with_error(ApiRes.SERVICE_ERROR)
     return Response(rsp, mimetype='text/event-stream')

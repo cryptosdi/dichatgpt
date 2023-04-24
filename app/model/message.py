@@ -14,6 +14,7 @@ class Dbmessage(db.Model):
         s_message = Dbmessage(user_id=userId, message=msg, chat_id = chatId)
         db.session.add(s_message)
         db.session.commit()
+        return s_message.id
 
     def query(userId, count):
         q_message = db.session.query(Dbmessage).filter_by(
