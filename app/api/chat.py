@@ -58,7 +58,7 @@ def getChats():
 
 @ct.route('/add/chat', methods=['POST'])
 @jwt_required()
-@limiter.limit("5/minute")
+@limiter.limit("100/minute")
 def addChats():
     user_id = get_jwt_identity()
     chat_name = request.json.get('chat_name')
@@ -71,7 +71,7 @@ def addChats():
 
 @ct.route('/update/chat', methods=['POST'])
 @jwt_required()
-@limiter.limit("5/minute")
+@limiter.limit("100/minute")
 def updateChat():
     user_id = get_jwt_identity()
     chat_id = request.json.get('chat_id')
@@ -82,7 +82,7 @@ def updateChat():
 
 @ct.route('/delete/chat', methods=['POST'])
 @jwt_required()
-@limiter.limit("5/minute")
+@limiter.limit("100/minute")
 def deleteChat():
     user_id = get_jwt_identity()
     chat_id = request.json.get('chat_id')
