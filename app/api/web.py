@@ -13,7 +13,7 @@ import time
 @limiter.limit("5/minute")
 def index():
     #user_id = get_jwt_identity()
-    return url_for('home')
+    return url_for('/home')
     #return Response(generate_text(), mimetype='application/octet-stream')
 def generate_text():
     yield "Hello "
