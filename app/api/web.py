@@ -1,4 +1,4 @@
-from flask import Flask, request, url_for
+from flask import Flask, redirect, url_for
 from app.api import bp
 from app.utils import jsonify_with_data
 from app.utils import jsonify_with_error
@@ -13,7 +13,7 @@ import time
 @limiter.limit("5/minute")
 def index():
     #user_id = get_jwt_identity()
-    return url_for('/home')
+    return redirect(url_for('home'))
     #return Response(generate_text(), mimetype='application/octet-stream')
 def generate_text():
     yield "Hello "
