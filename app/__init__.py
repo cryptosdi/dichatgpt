@@ -8,13 +8,11 @@ from datetime import timedelta
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import openai
-from flask_cors import CORS
 
 # 加载 .env 文件中的配置信息
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
 
 app.config['JSON_AS_ASCII'] = False
 
@@ -37,8 +35,8 @@ jwt.init_app(app)
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 #设置本地代理
-os.environ['HTTP_PROXY'] = 'http://127.0.0.1:8001'        
-os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:8001'
+#os.environ['HTTP_PROXY'] = 'http://127.0.0.1:8001'        
+#os.environ['HTTPS_PROXY'] = 'http://127.0.0.1:8001'
 
 from app.api import bp
 app.register_blueprint(bp, url_prefix='/')
